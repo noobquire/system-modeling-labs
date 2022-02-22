@@ -2,13 +2,13 @@
 
 namespace SystemModelingLabs.QueueingModel.Core.Elements
 {
-    public class ParallelProcessingChannelElement<T> : ProcessingChannelElement<T> where T : QueueItem
+    public class SwitchableQueueProcessingElement<T> : PriorityQueueProcessingElement<T> where T : QueueItem
     {
         public int QueueSwitchCount { get; private set; } = 0;
-        public ParallelProcessingChannelElement<T>[]? ParallelChannels { get; set; }
+        public SwitchableQueueProcessingElement<T>[]? ParallelChannels { get; set; }
         private readonly int queueSwitchThreshold;
 
-        public ParallelProcessingChannelElement(Func<double> delayRng, int queueSwitchThreshold = 2, int maxQueueLength = int.MaxValue) : base(delayRng, maxQueueLength)
+        public SwitchableQueueProcessingElement(Func<T, double> delayRng, Func<T, int> priorityFunc, int queueSwitchThreshold = 2, int maxQueueLength = int.MaxValue) : base(delayRng, priorityFunc, maxQueueLength)
         {
             this.queueSwitchThreshold = queueSwitchThreshold;
         }
@@ -24,9 +24,10 @@ namespace SystemModelingLabs.QueueingModel.Core.Elements
             {
                 Console.WriteLine($"[T+{CurrentTime}]: Switching last item from {longerQueueChannel.Name} to {this.Name}");
                 longerQueueChannel.QueueSwitchCount++;
-                var item = longerQueueChannel.Queue.Last();
-                longerQueueChannel.Queue = new Queue<T>(longerQueueChannel.Queue.Take(longerQueueChannel.Queue.Count - 1));
-                this.StartProccesing(item);
+                var item = longerQueueChannel.Queue.UnorderedItems.Last();
+                
+                longerQueueChannel.Queue = new PriorityQueue<T, int>(longerQueueChannel.Queue.UnorderedItems.Take(longerQueueChannel.Queue.Count - 1));
+                this.StartProccesing(item.Element);
             }
         }
     }

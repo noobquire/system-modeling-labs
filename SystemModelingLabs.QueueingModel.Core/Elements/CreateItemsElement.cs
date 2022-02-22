@@ -8,20 +8,23 @@ namespace SystemModelingLabs.QueueingModel.Core.Elements
     /// <typeparam name="T">Type of items being produced.</typeparam>
     public class CreateItemsElement<T> : Element<T> where T : QueueItem
     {
+        private T nextItem;
         private readonly IItemFactory<T> factory;
 
-        public CreateItemsElement(IItemFactory<T> factory, Func<double> delayRng) : base(delayRng)
+        public CreateItemsElement(IItemFactory<T> factory, Func<T, double> delayRng) : base(delayRng)
         {
             this.factory = factory;
-            NextEventTime = DelayRng();
+            nextItem = factory.Create();
+            NextEventTime = CurrentTime + DelayRng(nextItem);
         }
 
         public override void FinishProcessing()
         {
             base.FinishProcessing();
-            NextEventTime = CurrentTime + DelayRng();
-            var item = factory.Create();
-            NextElement?.StartProccesing(item);
+            nextItem.CreatedAt = CurrentTime;
+            NextElement?.StartProccesing(nextItem);
+            nextItem = factory.Create();
+            NextEventTime = CurrentTime + DelayRng(nextItem);
         }
     }
 }

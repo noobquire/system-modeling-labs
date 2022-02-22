@@ -6,5 +6,9 @@
     public abstract class QueueItem
     {
         public int Id { get; set; }
+
+        public double CreatedAt { get; set; }
+
+        public double ExitedAt { get; set; }
     }
 }

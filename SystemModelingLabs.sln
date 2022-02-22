@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemModelingLabs.Queueing
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemModelingLabs.QueueingModel.Bank", "SystemModelingLabs.QueueingModel.Bank\SystemModelingLabs.QueueingModel.Bank.csproj", "{4DBCF3AF-CD6D-4BAB-B795-CFE7D32E0A4F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemModelingLabs.QueueingModel.Hospital", "SystemModelingLabs.QueueingModel.Hospital\SystemModelingLabs.QueueingModel.Hospital.csproj", "{7F375C44-314C-4277-BCB6-F250F75E1671}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{4DBCF3AF-CD6D-4BAB-B795-CFE7D32E0A4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DBCF3AF-CD6D-4BAB-B795-CFE7D32E0A4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DBCF3AF-CD6D-4BAB-B795-CFE7D32E0A4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F375C44-314C-4277-BCB6-F250F75E1671}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F375C44-314C-4277-BCB6-F250F75E1671}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F375C44-314C-4277-BCB6-F250F75E1671}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F375C44-314C-4277-BCB6-F250F75E1671}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

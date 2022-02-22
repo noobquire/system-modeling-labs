@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SystemModelingLabs.QueueingModel.Core.Elements;
+﻿using SystemModelingLabs.QueueingModel.Core.Elements;
 using SystemModelingLabs.QueueingModel.Core.Models;
 
 namespace SystemModelingLabs.QueueingModel.Core
@@ -22,11 +17,11 @@ namespace SystemModelingLabs.QueueingModel.Core
 
         private Dictionary<string, double> GetAverageProcessorBusiness()
         {
-            return model.Elements.Where(e => e is ProcessingChannelElement<T>)
+            return model.Elements.Where(e => e is PriorityQueueProcessingElement<T>)
                 .ToDictionary(e => e.Name, e =>
                 {
-                    var processor = (ProcessingChannelElement<T>)e;
-                    return processor.TotalProcessingTime / processor.ProcessedItemsCount;
+                    var processor = (PriorityQueueProcessingElement<T>)e;
+                    return processor.TotalProcessingTime / model.CurrentTime;
                 });
         }
 
@@ -37,7 +32,7 @@ namespace SystemModelingLabs.QueueingModel.Core
 
         private double GetAverageProcessingFinishedInterval()
         {
-            return ProcessingChannelElement<T>.TotalTimeBetweenProcessing / model.TotalItemsProcessed;
+            return PriorityQueueProcessingElement<T>.TotalTimeBetweenProcessing / model.TotalItemsProcessed;
         }
 
         private double GetAverageProcessingTime(double time)
@@ -47,10 +42,10 @@ namespace SystemModelingLabs.QueueingModel.Core
 
         private Dictionary<string, double> GetAverageQueueLength()
         {
-            return model.Elements.Where(e => e is ProcessingChannelElement<T>)
+            return model.Elements.Where(e => e is PriorityQueueProcessingElement<T>)
                 .ToDictionary(e => e.Name, e =>
                 {
-                    var processor = (ProcessingChannelElement<T>)e;
+                    var processor = (PriorityQueueProcessingElement<T>)e;
                     return processor.TotalQueueLengthTime / model.CurrentTime;
                 });
         }

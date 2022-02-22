@@ -13,8 +13,8 @@ namespace SystemModelingLabs.QueueingModel.Core.Elements
         DecisionFunction<T> decision;
 
         public ConditionElement(IEnumerable<Element<T>> outputs,
-            DecisionFunction<T> decision) 
-            : base(() => double.MaxValue)
+            DecisionFunction<T> decision, Func<T, double> delayRng) 
+            : base(delayRng)
         {
             this.outputs = outputs;
             this.decision = decision;
@@ -23,7 +23,7 @@ namespace SystemModelingLabs.QueueingModel.Core.Elements
         public override void StartProccesing(T item)
         {
             base.StartProccesing(item);
-            NextEventTime = CurrentTime;
+            NextEventTime = CurrentTime + DelayRng(item);
             currentItem = item;
         }
 
@@ -38,7 +38,7 @@ namespace SystemModelingLabs.QueueingModel.Core.Elements
 
             var output = decision(outputs, currentItem);
 
-            output.StartProccesing(currentItem);
+            output?.StartProccesing(currentItem);
             currentItem = null;
             NextEventTime = double.MaxValue;
         }

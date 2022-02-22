@@ -11,22 +11,22 @@ namespace SystemModelingLabs.QueueingModel.Core.Elements
     {
         public string Name { get; init; }
 
-        protected readonly Func<double> DelayRng;
+        protected readonly Func<T, double> DelayRng;
 
-        protected Element(Func<double> delayRng)
+        protected Element(Func<T, double> delayRng)
         {
             DelayRng = delayRng;
         }
 
         public Element<T>? NextElement;
 
-        public double CurrentTime { get; set; } = 0;
-        public double NextEventTime { get; set; } = double.MaxValue;
-        public int ProcessedItemsCount { get; private set; }
+        public virtual double CurrentTime { get; set; } = 0;
+        public virtual double NextEventTime { get; set; } = double.MaxValue;
+        public int ProcessedItemsCount { get; protected set; }
 
         public virtual void StartProccesing(T item)
         {
-            Console.WriteLine($"[T+{CurrentTime}]: {Name} started processing item");
+            Console.WriteLine($"[T+{CurrentTime}]: {Name} started processing item {item}");
         }
 
         public virtual void FinishProcessing()

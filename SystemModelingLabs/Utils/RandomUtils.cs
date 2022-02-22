@@ -28,5 +28,35 @@ namespace SystemModelingLabs.Utils
                 .Select(i => rng.NextDouble());
             return sigma * (randomValues.Sum() - 6) + mu;
         }
+
+        /// <summary>
+        /// Generates random numbers with uniform distribution.
+        /// </summary>
+        /// <param name="min">Minimum generated value.</param>
+        /// <param name="max">Maximum generated value.</param>
+        /// <returns>Random number with uniform distribution.</returns>
+        public static double NextUniform(double min, double max)
+        {
+            var rng = new Random();
+            var randomValue = rng.NextDouble();
+            return randomValue * max + min;
+        }
+
+
+        /// <summary>
+        /// Generates random numbers with Erlang distribution.
+        /// </summary>
+        /// <param name="k">Amount of iterations.</param>
+        /// <param name="mu">Mean value.</param>
+        /// <returns>Random number with uniform distribution.</returns>
+        public static double NextErlang(double mu, int k)
+        {
+            var rng = new Random();
+            var randomValue = rng.NextDouble();
+            var sum = Enumerable.Range(0, k)
+                .Select(i => rng.NextDouble())
+                .Sum();
+            return -sum / (k * mu);
+        }
     }
 }

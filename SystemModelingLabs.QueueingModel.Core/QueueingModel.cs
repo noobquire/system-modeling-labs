@@ -9,12 +9,12 @@ namespace SystemModelingLabs
         public double CurrentTime { get; private set; } = 0;
         public int TotalItemsCreated => Elements.Where(e => e is CreateItemsElement<T>)
                 .Sum(e => ((CreateItemsElement<T>)e).ProcessedItemsCount);
-        public int TotalFailures => Elements.Where(e => e is ProcessingChannelElement<T>)
-                .Sum(e => ((ProcessingChannelElement<T>)e).FailureCount);
-        public int TotalQueueChanges => Elements.Where(e => e is ParallelProcessingChannelElement<T>)
-                .Sum(e => ((ParallelProcessingChannelElement<T>)e).QueueSwitchCount);
-        public int TotalItemsProcessed =>  Elements.Where(e => e is ProcessingChannelElement<T>)
-                .Sum(e => ((ProcessingChannelElement<T>)e).ProcessedItemsCount);
+        public int TotalFailures => Elements.Where(e => e is PriorityQueueProcessingElement<T>)
+                .Sum(e => ((PriorityQueueProcessingElement<T>)e).FailureCount);
+        public int TotalQueueChanges => Elements.Where(e => e is SwitchableQueueProcessingElement<T>)
+                .Sum(e => ((SwitchableQueueProcessingElement<T>)e).QueueSwitchCount);
+        public int TotalItemsProcessed =>  Elements.Where(e => e is PriorityQueueProcessingElement<T>)
+                .Sum(e => ((PriorityQueueProcessingElement<T>)e).ProcessedItemsCount);
 
         public QueueingModel(IEnumerable<Element<T>> elements,
             int maxQueue = int.MaxValue)
